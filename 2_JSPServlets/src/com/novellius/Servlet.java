@@ -23,11 +23,20 @@ public class Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
-		out.println("<html>");
-		out.println("<h1>Mensaje desde el Servle</h1>");
-		out.println("</html>");
+		String accion = request.getParameter("accion");
+		if(accion!=null){
+			
+			if(accion.equals("login")){
+				getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+			}else if(accion.equals("inicio")){
+				getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+			}
+				
+			
+		}else{
+			//Contexto del servlet
+			getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+		}
 	}
 
 	/**
