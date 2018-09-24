@@ -15,7 +15,11 @@
     <servlet-name>Servlet</servlet-name>
     <servlet-class>com.novellius.Servlet</servlet-class>
     
-    <!--  -->
+    <!-- Uso de parametros inciales  -->
+    <init-param>
+    	<param-name>rutaJsp</param-name>
+    	<param-value>/jsp/</param-value><!-- Ruta de la carpeta de los jsp -->
+    </init-param>
     
   </servlet>
   <!-- Mapear la ruta -->
