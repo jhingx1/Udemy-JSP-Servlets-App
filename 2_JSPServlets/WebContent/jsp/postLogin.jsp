@@ -7,10 +7,15 @@
 <title>Post-Login</title>
 </head>
 <body>
-	<h1>PostLogin.jsp</h1>
-	<%
-		out.println("Tu usuario : "+ request.getParameter("usuario"));
-	%>
-	<%="Tu conseña : "+request.getParameter("contrasena") %>
+	<h1>PostLogin.jsp</h1>	
+	<h2>Request</h2>
+	<%="usuario: "+request.getAttribute("usuario") +" contraseña" + request.getAttribute("contrasena")%>
+	<h2>Sesion</h2>
+	<%="usuario: "+session.getAttribute("usuario") +" contraseña" + session.getAttribute("contrasena")%>
+	<h2>Contexto</h2>	
+	<%="usuario: "+application.getAttribute("usuario") +" contraseña" + application.getAttribute("contrasena")%>
+	
+	
+	
 </body>
 </html>

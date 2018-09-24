@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>Login.jsp</h1>
-	<form method="get">
+	<form method="post" action="?accion=iniciarSesion">
 		<table>
 			<tr>
 				<td>Nombre Usuario:</td>
@@ -18,8 +18,7 @@
 				<td>Contraseña:</td>
 				<td><input type="password" name="contrasena" /></td>
 			</tr>
-			<tr>
-				<td><input type="hidden" name="accion" value="iniciarSesion"/></td>
+			<tr>				
 				<td><input type="submit" value="Iniciar Session" /></td>
 			</tr>			
 		</table>
