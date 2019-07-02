@@ -14,9 +14,16 @@
     <display-name>Servlet</display-name>
     <servlet-name>Servlet</servlet-name>
     <servlet-class>com.negocio.Servlet</servlet-class>
+    
+    <!-- Uso de parametros inciales  -->
+    <init-param>
+    	<param-name>rutaJsp</param-name>
+    	<param-value>/jsp/</param-value><!-- Ruta de la carpeta de los jsp -->
+    </init-param>
+    
   </servlet>
-  <servlet-mapping>
+  <servlet-mapping><!-- Mapeo de los servlets -->
     <servlet-name>Servlet</servlet-name>
-    <url-pattern>/Servlet</url-pattern>
+    <url-pattern>//*</url-pattern>
   </servlet-mapping>
 </web-app>

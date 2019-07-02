@@ -1,6 +1,8 @@
-notas: Curso Servlet y JSP
+﻿notas: Curso Servlet y JSP
 
 Scriptlets : Es el codigo java incrutado en una pagina JSP.
+
+El servlet : actua como controlador.
 
 Request : Peticion
 Response : Respuesta
