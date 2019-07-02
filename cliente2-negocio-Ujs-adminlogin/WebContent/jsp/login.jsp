@@ -23,8 +23,34 @@
 
 <div class="container">
 	<div class="row">
+		
 		<div class="col-md-6 col-md-offset-3">
-			
+		
+			<!-- Para mostrar el mensaje de error -->
+			<div class="panel panel-login">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-6">
+								<a href="#" class="active" id="login-form-link">Login - Demos Branches</a>								
+							</div>
+							<div class="col-xs-6">
+								<a href="#" class="active" id="login-form-link">Registrar</a>								
+							</div>
+							
+							<%--  <%=session.getAttribute("email") %> --%>							
+							<span style="color:red;font-weigh:bold;">
+							<%
+							String error =(String) request.getAttribute("error");
+							if(error != null){
+								out.print(error);
+							}							
+							%>
+							</span>
+													
+						</div>	
+					</div>
+			</div>
+		
 			<form method="post" action="?accion=iniciarSession">
 				
 				<div class = "form-group">
@@ -36,7 +62,7 @@
 					<input type="password" name="contrasena" class="form-control"/>
 				</div>
 				<div class = "checkbox">
-					<label><input type="checkbox" checked="" />Recuerda mis Datos</label>			
+					<label><input type="checkbox"  />Recuerda mis Datos</label>			
 				</div>
 				
 				<div class="row">
@@ -46,7 +72,8 @@
 					</div>
 				</div>				
 			</form>
-			<a href="?accion=inicio">Regresar</a>
+			
+			<!-- <a href="?accion=inicio">Regresar</a>  -->
 					
 		</div>
 	</div>

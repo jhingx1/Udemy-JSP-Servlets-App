@@ -118,7 +118,7 @@ public class Servlet extends HttpServlet {
 		
 		if(accion!=null){
 			
-			if(accion.equals("iniciarSesion")){
+			if(accion.equals("iniciarSession")){
 				/*
 				System.out.println("Usuario : "+request.getParameter("usuario") +
 						" Contraseña : " + request.getParameter("contracena"));
@@ -149,8 +149,8 @@ public class Servlet extends HttpServlet {
 				if(cuenta.login(usuario, contrasena)){					
 					log.info("Ingresado correctamente como: " +  usuario);
 					
-					sesion.setAttribute("email", usuario);
-					sesion.setAttribute("email", usuario);
+					sesion.setAttribute("usuario", usuario);
+					sesion.setAttribute("contrasena", contrasena);
 					
 					//redirigir el controlador al index
 					setRespuestaControlador("index").forward(request, response);
