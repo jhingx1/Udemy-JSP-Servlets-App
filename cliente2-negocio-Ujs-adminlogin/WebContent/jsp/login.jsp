@@ -16,6 +16,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <title>Login-Portal</title>
 </head>
@@ -36,33 +37,65 @@
 							<div class="col-xs-6">
 								<a href="#" class="active" id="login-form-link">Registrar</a>								
 							</div>
+												
+						</div>
 							
-							<%--  <%=session.getAttribute("email") %> --%>							
-							<span style="color:red;font-weigh:bold;">
-							<%
-							String error =(String) request.getAttribute("error");
-							if(error != null){
-								out.print(error);
-							}							
-							%>
-							</span>
-													
-						</div>	
 					</div>
 			</div>
 		
 			<form method="post" action="?accion=iniciarSession">
-				<%=session.getAttribute("usuario") %>
+				
+				
+				<%--  <%=session.getAttribute("usuario") %> Para ver si la sesscion se ha destruido--%>							
+				<span style="color:red;font-weigh:bold;">
+						
+			<!-- Para mostra el error con scope --> 
+<%-- 		<c:if test="${requestScope.error != null}" > requestScope : objetoImplicito --%>
+<%-- 			<c:out value="${requestScope.error}" /> --%>
+<%-- 		</c:if> --%>
+				<!-- Como Switch  -->
+				<c:choose> 
+					<c:when test="${requestScope.error != null}"> <!-- Como CASE -->
+						<c:out value="${requestScope.error}" />
+					</c:when>
+					<c:otherwise><!-- else - default -->
+						Sin Errores
+					</c:otherwise>
+				</c:choose>
+			
+					<br />
+				
+				<%-- Uso de Scripts - no recomendado<%
+				String error ="Script " + (String) request.getAttribute("error");
+				if(error != null){
+					out.print(error);
+				}							
+				%> --%>
+				
+				</span>				
+				
 				<div class = "form-group">
 					<label>Nombre de Usuario</label>
-					<input type="text" name="usuario" class="form-control"/>
+					<%
+						Cookie[] cookies = request.getCookies();
+						String valor = "";
+						for(Cookie c:cookies){
+							if(c.getName().equals("usuario")){
+								valor = c.getValue();  //getValue es una propiedad de la cadena										
+							}else{
+								out.println("No encontrado");
+							}
+						}
+					
+					%>
+					<input type="text" name="usuario" class="form-control" value="<%=valor%>"/>
 				</div>
 				<div class = "form-group">
 					<label>Contraseña</label>
-					<input type="password" name="contrasena" class="form-control"/>
+					<input type="password" name="contrasena" class="form-control" />
 				</div>
 				<div class = "checkbox">
-					<label><input type="checkbox"  />Recuerda mis Datos</label>			
+					<label><input type="checkbox"  name="ckbox"/>Recuerda mis Datos</label>			
 				</div>
 				
 				<div class="row">

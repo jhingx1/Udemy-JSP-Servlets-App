@@ -2,14 +2,17 @@ package com.negocio;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
+//import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +24,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.negocio.model.Cuenta;
+import com.negocio.beans.Administrador;
 
 /**
  * @see Servlet Recibe peticiones de internet.
@@ -85,6 +89,14 @@ public class Servlet extends HttpServlet {
 		//Creando un session - luego la vamos a destruir
 		HttpSession sesion = request.getSession();
 		
+		//CREANDO LA CONEXION CON LA BASE DE DATOS
+		try {
+			con = ds.getConnection();
+		} catch (SQLException e) {
+			//Enviar a una vista de error
+			log.error("Error al crear conexion "  + e.getMessage());
+		}	
+		
 		if(accion!=null){
 			
 			if(accion.equals("login")){
@@ -95,6 +107,25 @@ public class Servlet extends HttpServlet {
 				sesion.invalidate();
 				log.info("sesion destruida");
 				setRespuestaControlador("login").forward(request, response);
+			}else if(accion.equals("consultarAdministradores")){ //desde el index
+				
+				//Cuenta cuenta = new Cuenta(con); se puede simplificar con la instanciacion anonima
+				ArrayList<Administrador> administradores = new Cuenta(con).consultarAdministradores();
+				
+				if(administradores.isEmpty()){ //si esta vacio
+					//se imprimira en una vista jsp que se creara
+					request.setAttribute("mensaje", "No se encotraron administradores");
+				}else{
+					//esto se colocara en el ambito_scopes(que existen 3) de una sesion					
+					request.setAttribute("mensaje", "Administradores encontrados");		
+					//para comunicarlo con la vista jsp
+					sesion.setAttribute("administradores", administradores);						
+				}				
+				//redirigiendo a una pagina jsp, asi no encuetre administradores.
+				
+				setRespuestaControlador("consultaAdministradores").forward(request, response);
+				
+				
 			}
 			
 		}else{
@@ -150,6 +181,25 @@ public class Servlet extends HttpServlet {
 				//redirigiendo hacia otra pagina
 				setRespuestaControlador("postLogin.jsp").forward(request, response);*/
 				
+				//implementando las cookies - recordar contraseña
+				//el formulario envia todo lo que esta dentro de el asi k si no encuentra un parametro 
+				//con el name = ckbox genera error - por eso se le coloca el try catch 
+				try {
+					//si esta marcado
+					if(request.getParameter("ckbox").equals("on")){
+						//creamos un cookie
+						Cookie cookie = new Cookie("usuario",usuario);
+						cookie.setMaxAge(60*60*24); //timepo de vida
+						response.addCookie(cookie);
+						log.info("Cookie creada");
+					}
+				} catch (NullPointerException e) {
+					log.info("No marco el check");
+					//mejorar el codigo para el cookie
+				}
+				
+				
+				//para la validacion del usurio - clase model 
 				Cuenta cuenta = new Cuenta(con);
 				if(cuenta.login(usuario, contrasena)){					
 					log.info("Ingresado correctamente como: " +  usuario);
