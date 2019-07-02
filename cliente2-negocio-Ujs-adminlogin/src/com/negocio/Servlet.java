@@ -77,7 +77,8 @@ public class Servlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//obtener una variable accion request:esta implicito en jsp y servlet
-		String accion = request.getParameter("accion");
+		String accion = request.getParameter("accion");		
+		
 		if(accion!=null){
 			
 			if(accion.equals("login")){
@@ -90,7 +91,7 @@ public class Servlet extends HttpServlet {
 			
 		}else{
 			//redirigiendo hacia otra pagina
-			getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
 		}
 		
 	}
@@ -134,7 +135,8 @@ public class Servlet extends HttpServlet {
 			
 		}else{
 			//redirigiendo hacia otra pagina
-			setRespuestaControlador("index.jsp").forward(request, response);
+			//setRespuestaControlador("index.jsp").forward(request, response);
+			setRespuestaControlador("login.jsp").forward(request, response);
 		}
 		
 	}
