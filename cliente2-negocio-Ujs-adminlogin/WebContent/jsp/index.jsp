@@ -30,7 +30,6 @@
 </head>
 <body>
 
-<h1>Ingresado como : </h1>
 <!--  
 <!--%
 
@@ -54,9 +53,9 @@
 		<div class="panel-heading">
 			<div class="row">
 				<div class="col-xs-6">
-					<h3>Ingresado como : <%=session.getAttribute("email") %> </h3>
+					<h3>Ingresado como : <%=session.getAttribute("usuario") %> </h3>
 					
-					<p><a href="?acccion=logout">Cerrar Sesion</a></p><!-- Se procesa en doget -->
+					<p><a href="?accion=logout">Cerrar Sesion</a></p><!-- Se procesa en doget -->
 					<p>Consultar Administradores</p>													
 					<p>Contenido Principal</p>
 					

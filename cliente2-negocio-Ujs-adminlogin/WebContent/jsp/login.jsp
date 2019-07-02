@@ -52,7 +52,7 @@
 			</div>
 		
 			<form method="post" action="?accion=iniciarSession">
-				
+				<%=session.getAttribute("usuario") %>
 				<div class = "form-group">
 					<label>Nombre de Usuario</label>
 					<input type="text" name="usuario" class="form-control"/>

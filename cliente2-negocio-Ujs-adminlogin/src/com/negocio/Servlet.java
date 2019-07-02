@@ -80,7 +80,10 @@ public class Servlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//obtener una variable accion request:esta implicito en jsp y servlet
-		String accion = request.getParameter("accion");		
+		String accion = request.getParameter("accion");	
+		
+		//Creando un session - luego la vamos a destruir
+		HttpSession sesion = request.getSession();
 		
 		if(accion!=null){
 			
@@ -88,8 +91,10 @@ public class Servlet extends HttpServlet {
 				getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
 			}else if(accion.equals("inicio")){
 				getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
-			}else if(accion.equals("iniciarSesion")){
-				getServletContext().getRequestDispatcher("/jsp/postLogin.jsp").forward(request, response);
+			}else if(accion.equals("logout")){	 //para destruir la sesscion.	
+				sesion.invalidate();
+				log.info("sesion destruida");
+				setRespuestaControlador("login").forward(request, response);
 			}
 			
 		}else{
