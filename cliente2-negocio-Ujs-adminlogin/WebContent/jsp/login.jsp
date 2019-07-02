@@ -36,7 +36,7 @@
 					<input type="password" name="contrasena" class="form-control"/>
 				</div>
 				<div class = "checkbox">
-					<label><input type="checkbox" checked="checked" />Recuerda mis Datos</label>			
+					<label><input type="checkbox" checked="" />Recuerda mis Datos</label>			
 				</div>
 				
 				<div class="row">

@@ -20,6 +20,8 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import com.negocio.model.Cuenta;
+
 /**
  * @see Servlet Recibe peticiones de internet.
  * @see Ciclo de vida del servlet : leer notas-cicloServlet
@@ -54,6 +56,7 @@ public class Servlet extends HttpServlet {
 		BasicConfigurator.configure();
     	log.info("ruta jsp : " + rutaJsp);
     	
+    	//Para usar la conexion de JNDI sin necesidad de conocer el usuario y contraseña
     	try {
 			InitialContext initContext = new InitialContext();
 			Context env = (Context) initContext.lookup("java:comp/env");
@@ -102,6 +105,17 @@ public class Servlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String accion = request.getParameter("accion");
+		
+		//variable para la sesion
+		HttpSession sesion = request.getSession();
+		
+		//creando la conexion
+		try {
+			con = ds.getConnection();
+		} catch (Exception e) {
+			log.error("Error al crear la conexion" + e.getMessage());
+		}
+		
 		if(accion!=null){
 			
 			if(accion.equals("iniciarSesion")){
@@ -112,7 +126,7 @@ public class Servlet extends HttpServlet {
 				String usuario = request.getParameter("usuario");
 				String contrasena = request.getParameter("contrasena");
 				
-				//Ambito request, una peticion solo una vez por peticion
+				/*//Ambito request, una peticion solo una vez por peticion
 				request.setAttribute("usuario", usuario);
 				request.setAttribute("contrasena", contrasena);
 				
@@ -129,7 +143,25 @@ public class Servlet extends HttpServlet {
 				contexto.setAttribute("contrasena", contrasena);
 				
 				//redirigiendo hacia otra pagina
-				setRespuestaControlador("postLogin.jsp").forward(request, response);
+				setRespuestaControlador("postLogin.jsp").forward(request, response);*/
+				
+				Cuenta cuenta = new Cuenta(con);
+				if(cuenta.login(usuario, contrasena)){					
+					log.info("Ingresado correctamente como: " +  usuario);
+					
+					sesion.setAttribute("email", usuario);
+					sesion.setAttribute("email", usuario);
+					
+					//redirigir el controlador al index
+					setRespuestaControlador("index").forward(request, response);
+					
+				}else{					
+					log.error("error login");
+					//error en la amisma pagina
+					request.setAttribute("error", "Nombre de usuario o Contraseña incorrectos");
+					setRespuestaControlador("login").forward(request, response);
+				}	
+				
 				
 			}
 			
@@ -137,6 +169,13 @@ public class Servlet extends HttpServlet {
 			//redirigiendo hacia otra pagina
 			//setRespuestaControlador("index.jsp").forward(request, response);
 			setRespuestaControlador("login.jsp").forward(request, response);
+		}
+		
+		//Liberando la conexion
+		try {
+			con.close();
+		} catch (Exception e) {
+			log.error("Error al cerrar la conexion" + e.getMessage());
 		}
 		
 	}
