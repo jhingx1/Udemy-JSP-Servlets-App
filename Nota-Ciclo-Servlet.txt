@@ -1,0 +1,106 @@
+Ciclo de vida del servlet - https://www.tutorialspoint.com/servlets/servlets-life-cycle.htm
+
+El servlet se inicializa llamando al método init () .
+El servlet llama al método service () para procesar la solicitud de un cliente.
+El servlet se termina llamando al método destroy () .
+Finalmente, el servlet es basura recolectada por el recolector de basura de la JVM.
+
+El método init ()
+-----------------
+El método init se llama solo una vez. Se llama solo cuando se crea el servlet, y no se llama para 
+ninguna solicitud de usuario posterior. Por lo tanto, se usa para inicializaciones únicas, al igual 
+que con el método init de applets.
+
+Normalmente, el servlet se crea cuando un usuario invoca por primera vez una URL correspondiente al 
+servlet, pero también puede especificar que el servlet se cargue cuando se inicie el servidor por 
+primera vez.
+
+Cuando un usuario invoca un servlet, se crea una única instancia de cada servlet, y cada solicitud 
+de usuario genera un nuevo hilo que se entrega a doGet o doPost según sea apropiado. El método init() 
+simplemente crea o carga algunos datos que se utilizarán durante la vida útil del servlet.
+
+Ejm :
+
+public void init() throws ServletException { //Excepcion que la va a controlar el metodo que la llama
+   // Initialization code...
+}
+
+El método de service()
+----------------------
+El método service () es el método principal para realizar la tarea real. El contenedor de servlets 
+(es decir, el servidor web) llama al método service () para manejar las solicitudes provenientes del 
+cliente (navegadores) y para escribir la respuesta formateada al cliente.
+
+Cada vez que el servidor recibe una solicitud de un servlet, el servidor genera un nuevo subproceso y 
+llama al servicio. El método service () verifica el tipo de solicitud HTTP (GET, POST, PUT, DELETE, etc.) 
+y llama a los métodos doGet, doPost, doPut, doDelete, etc., según corresponda.
+
+Ejm:
+
+public void service(ServletRequest request, ServletResponse response) 
+   throws ServletException, IOException {
+}
+
+Los métodos doGet () y doPost () son los más utilizados en cada solicitud de servicio. Aquí está la 
+firma de estos dos métodos.
+
+El método doGet()
+-----------------
+Una solicitud GET resulta de una solicitud normal para una URL o de un formulario HTML que no tiene un 
+MÉTODO especificado y debe ser manejado por el método doGet().
+
+public void doGet(HttpServletRequest request, HttpServletResponse response)
+   throws ServletException, IOException {
+   // Servlet code
+}
+
+El método doPost()
+------------------
+Una solicitud POST resulta de un formulario HTML que enumera específicamente POST como MÉTODO y debe 
+manejarse mediante el método doPost ().
+
+Una solicitud POST resulta de un formulario HTML que enumera específicamente POST como MÉTODO y debe 
+manejarse mediante el método doPost ().
+
+El método destroy ()
+El método destroy () se llama solo una vez al final del ciclo de vida de un servlet. Este método le 
+da a su servlet la oportunidad de cerrar las conexiones de la base de datos, detener los subprocesos en 
+segundo plano, escribir listas de cookies o contabilizar los recuentos en el disco, y realizar otras 
+actividades de limpieza similares.
+
+
+Después de llamar al método destroy (), el objeto servlet se marca para la recolección de basura.
+
+Ejm:
+
+public void destroy() {
+   // Finalization code...
+}
+
+Diagrama de arquitectura
+------------------------
+La siguiente figura representa un escenario típico del ciclo de vida del servlet.
+
+Primero, las solicitudes HTTP que llegan al servidor se delegan al contenedor de servlets.
+
+El contenedor de servlets carga el servlet antes de invocar el método service ().
+
+Luego, el contenedor de servlets maneja múltiples solicitudes al generar múltiples subprocesos, 
+cada uno de los cuales ejecuta el método service () de una instancia única del servlet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

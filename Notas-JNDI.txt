@@ -1,0 +1,31 @@
+JNDI - Configuracion del Servidor
+
+Para el acceso para la base de datos. Sin necesidad que los programadores conoscan la constraseña y el usuario.
+
+Esto se hace en el servidor.
+
+Configuracion de JNDI - Para mysql (estan otras DB)
+
+https://tomcat.apache.org/tomcat-7.0-doc/jndi-datasource-examples-howto.html#MySQL_DBCP_1.x_Example
+
+Ejm.
+1.
+
+<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+               maxActive="100" maxIdle="30" maxWait="10000"
+               username="javauser" password="javadude" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/javatest"/>
+
+Esto se va  a configurar el archivo context.xml
+
+Pordemos cambiar el name, username = "nombre del usuario - root" password = "sasa"
+url : "jdbc:mysql://localhost:3306/administradores"
+
+2. En el proyecto se va a configurar el web.xml
+
+<resource-ref>
+      <description>DB Connection</description>
+      <res-ref-name>jdbc/novellius</res-ref-name> --> nombre que se le dio en el servidor
+      <res-type>javax.sql.DataSource</res-type>
+      <res-auth>Container</res-auth>
+  </resource-ref>
