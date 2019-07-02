@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1>Index.jsp</h1>
+<h1>Ingresado como : </h1>
 <!--  
 <!--%
 
@@ -25,6 +25,17 @@
 <p>
 	<a href="?accion=login">Iniciar Sesion</a>
 </p>
+
+<table>
+	<tr>
+		<td>Cerrar Session</td>
+	</tr>
+	<tr>
+		<td>Consultar Administradores</td>
+	</tr>	
+</table>
+
+<p>Contenido principal</p>
 
 </body>
 </html>

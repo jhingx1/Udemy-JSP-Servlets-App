@@ -1,7 +1,11 @@
 package com.negocio;
 
 import java.io.IOException;
+import java.sql.Connection;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -10,6 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
+
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * @see Servlet Recibe peticiones de internet.
@@ -21,10 +30,13 @@ import javax.servlet.http.HttpSession;
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String rutaJsp;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+	//implenmentacion del log4j
+    private static final Logger log = LogManager.getLogger("Servlet : ");
+   
+    //conexion con la vista
+  	private DataSource ds;
+  	private Connection con;
+   
     public Servlet() {
         super();        
     }
@@ -36,7 +48,21 @@ public class Servlet extends HttpServlet {
 		//Parametro inicial
 		//System.out.println(config.getInitParameter("rutaJsp"));//esta mapeado en el web.xml
 		rutaJsp = config.getInitParameter("rutaJsp");
-		System.out.println(rutaJsp);
+		//System.out.println(rutaJsp);
+		
+		//Uso de Log4j
+		BasicConfigurator.configure();
+    	log.info("ruta jsp : " + rutaJsp);
+    	
+    	try {
+			InitialContext initContext = new InitialContext();
+			Context env = (Context) initContext.lookup("java:comp/env");
+			
+			ds = (DataSource) env.lookup("jdbc/novellius");
+		} catch (NamingException e) {
+			log.error("Al configurar JNDI" + e.getMessage());
+		}
+		
 	}
     
     //para mejorar la redirccion de la ruta.

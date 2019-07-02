@@ -21,6 +21,10 @@
   				<td><input type="password" name="contrasena"/></td>
   			</tr>
   			<tr>
+  				<td></td>
+  				<td><input type="checkbox" checked="checked" value="Recordar mi Datos"/></td>
+  			</tr>
+  			<tr>
   				<!-- <td><input type="hidden" name="accion" value="iniciarSesion"/></td> -->
   				<td><input type="submit" value="Iniciar Sesion"/></td>
   			</tr>
