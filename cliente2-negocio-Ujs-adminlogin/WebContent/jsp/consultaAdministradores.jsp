@@ -23,16 +23,15 @@
 			<!-- Para compartir la variables de admin para consutar a la tabla pregunta. -->		
 			<c:set var="id" value="${admin.id}"/> <!-- Variable para conectarla con tb pregunta -->			
 			<sql:query var="rs" dataSource="jdbc/novellius">
-				SELECT pregunta from pregunta where id = id;
+				SELECT id,pregunta from pregunta where id = id;
 			</sql:query>
 			
 			<!-- iterar las filas que no debueve las filas -->			
 			<c:forEach var="row" items="${rs.rows}"> <!-- nos debuelve todas las filas que esten incluidas en el datasource = rs -->						
-				<c:set var="id" value="${admin.id}"/>
-				<c:if test="${admin.id == id}">
+				<c:if test="${admin.id == row.id}">
 					<c:out value="${row.pregunta}"/>
-				</c:if>
-							
+				</c:if>				
+				<!-- <c:out value="${row.pregunta}"/> -->											
 			</c:forEach>
 			<br/>
 		</c:catch>

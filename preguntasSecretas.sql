@@ -19,3 +19,11 @@ MODIFY COLUMN `idAdmin`  int(11) NOT NULL AUTO_INCREMENT;
 SET FOREIGN_KEY_CHECKS = 1;
 */
 
+
+update administrador
+set id = 1
+where idAdmin = 5;
+
+select a.email,a.nombre,a.estado,p.id,p.pregunta from pregunta p
+inner join administrador a
+on a.id = p.id;
