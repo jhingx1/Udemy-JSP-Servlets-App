@@ -125,9 +125,11 @@ public class Servlet extends HttpServlet {
 				
 				setRespuestaControlador("consultaAdministradores").forward(request, response);
 				
-				
+			}else if(accion.equals("registroPregunta")){//para registrar una pregunta (forma transaccional)
+				setRespuestaControlador(accion).forward(request, response);				
+			}else if(accion.equals("registrarPregunta")){
+				setRespuestaControlador(accion).forward(request, response);
 			}
-			
 		}else{
 			//redirigiendo hacia otra pagina
 			getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
