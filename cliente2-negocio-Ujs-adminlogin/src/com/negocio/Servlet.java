@@ -1,10 +1,12 @@
 package com.negocio;
 
 import java.io.IOException;
+import java.security.NoSuchProviderException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -24,6 +26,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.negocio.model.Cuenta;
+import com.negocio.util.ManejadorCorreos;
 import com.negocio.beans.Administrador;
 
 /**
@@ -121,15 +124,16 @@ public class Servlet extends HttpServlet {
 					//para comunicarlo con la vista jsp
 					sesion.setAttribute("administradores", administradores);						
 				}				
-				//redirigiendo a una pagina jsp, asi no encuetre administradores.
-				
+				//redirigiendo a una pagina jsp, asi no encuetre administradores.				
 				setRespuestaControlador("consultaAdministradores").forward(request, response);
 				
 			}else if(accion.equals("registroPregunta")){//para registrar una pregunta (forma transaccional)
 				setRespuestaControlador(accion).forward(request, response);				
 			}else if(accion.equals("registrarPregunta")){
 				setRespuestaControlador(accion).forward(request, response);
-			}
+			}else if(accion.equals("envioCorreo")){
+				setRespuestaControlador(accion).forward(request, response);
+			}			
 		}else{
 			//redirigiendo hacia otra pagina
 			getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
@@ -141,6 +145,8 @@ public class Servlet extends HttpServlet {
 	 * @see 
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");//Para que respete las tildes, el correo electronico
 		
 		String accion = request.getParameter("accion");
 		
@@ -220,6 +226,19 @@ public class Servlet extends HttpServlet {
 				}	
 				
 				
+			}else if(accion.equals("envioCorreo")){
+				ManejadorCorreos manejadorCorreos = new ManejadorCorreos();
+				try {
+					manejadorCorreos.enviarCorreo(request.getParameter("destino"),request.getParameter("mensaje"));
+					log.info("Correo Enviado Correctamente");
+					request.setAttribute("mensaje", "Correo Electronico enviado Correctamente");
+				} catch (Exception e) {		
+					log.error("Al enviar correo : "+ e.getMessage());
+					e.printStackTrace();
+					//setRespuestaControlador("errorCorreo").forward(request, response);
+					request.setAttribute("mensaje", "Error al Enviar Correo Electronico");
+				}
+				setRespuestaControlador("postEnvioCorreo").forward(request, response);
 			}
 			
 		}else{

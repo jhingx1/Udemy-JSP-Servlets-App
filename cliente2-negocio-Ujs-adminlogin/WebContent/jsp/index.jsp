@@ -57,7 +57,8 @@
 					
 					<p><a href="?accion=logout">Cerrar Sesion</a></p><!-- Se procesa en doget -->
 					<p><a href="?accion=consultarAdministradores">Consultar Administradores</a></p>
-					<p><a href="?accion=registroPregunta">Registrar pregunta</a></p>													
+					<p><a href="?accion=registroPregunta">Registrar pregunta</a></p>
+					<p><a href="?accion=envioCorreo">Enviar Correo - Electronico</a></p>													
 					<p>Contenido Principal</p>
 					
 				</div>

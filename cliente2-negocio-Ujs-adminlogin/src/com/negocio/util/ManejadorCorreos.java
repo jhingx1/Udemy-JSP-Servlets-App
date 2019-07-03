@@ -11,6 +11,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+//para utilizar esto se tiene que habilitar en google para enviar 
+//el correo, debido a que lo detecta que es peligroso.
+//Acceso de apps menos seguras -> https://myaccount.google.com/lesssecureapps -> Seria bueno que al terminar cambiemos de opcion.
 
 public class ManejadorCorreos {
 	
@@ -65,6 +68,7 @@ public class ManejadorCorreos {
 		 msg.addRecipient(Message.RecipientType.TO, new InternetAddress(destino));
 		 msg.setSubject("Tienes un nuevo correo electronico.");
 		 msg.setText("<h2>"+ mensaje +"</h2>", "UTF-8","html");
+		 
 		 
 		 Transport transport = sesion.getTransport("smtp");
 		 transport.connect("smtp.gmail.com", "jhingx1@gmail.com", "#sistemas#04");
