@@ -80,7 +80,8 @@ public class Cuenta {
 						rs.getString("email"), 
 						rs.getString("contrasena"),
 						rs.getString("nombre"), 
-						rs.getString("estado"), 
+						rs.getString("respuesta"), 
+						rs.getString("urlImagen"),
 						rs.getInt("id"));
 
 				// agregando a el arrayList
@@ -121,6 +122,32 @@ public class Cuenta {
 			return 0;
 		}
 		
+	}
+	
+	//Para ingresar un nuevo administrador
+	public boolean registrarAdministrador(Administrador administrador){
+		
+		String sql = "insert into administrador(email,contrasena,nombre,respuesta,urlImagen,id) values(?,?,?,?,?,?)";		
+		
+		try {
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1,administrador.getEmail());
+			st.setString(2,administrador.getContrasena());
+			st.setString(3,administrador.getNombre());
+			st.setString(4,administrador.getRespuesta());
+			st.setString(5,administrador.getUrlImagen());
+			st.setInt(6,administrador.getId());
+			
+			st.executeUpdate();
+			st.close();
+			
+			return true; //si todo va bien
+			
+		} catch (SQLException e) {
+			log.error("Error al registrar administradores " + e.getMessage());
+			e.printStackTrace();
+			return false;
+		}		
 	}
 	
 }
