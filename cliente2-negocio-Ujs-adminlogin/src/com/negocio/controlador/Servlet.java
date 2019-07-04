@@ -214,6 +214,11 @@ public class Servlet extends HttpServlet {
 					
 					sesion.setAttribute("usuario", usuario);
 					sesion.setAttribute("contrasena", contrasena);
+				
+					//logging-necesitamos que el id del usuario este en la session, lo usamos en el loggin
+					//Como necesitamos el id del usuario hay que obtener el usuario por consulta(no recomendado)
+					//en la clase cuenta(dao-conexion base de datos)
+					sesion.setAttribute("id",new Cuenta(con).obtenerIdAdmin(usuario));
 					
 					//redirigir el controlador al index
 					setRespuestaControlador("index").forward(request, response);

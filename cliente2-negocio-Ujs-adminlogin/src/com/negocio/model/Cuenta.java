@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.negocio.beans.Administrador;
 
-//los model son los que interactuan con la base de datos
+//los model(dao) son los que interactuan con la base de datos
 public class Cuenta {
 	
 	private Connection con;
@@ -99,5 +99,28 @@ public class Cuenta {
 		return administradores;
 	}
 	
+	public int obtenerIdAdmin(String emailAdmin){
+		
+		String sql = "select idAdmin from administrador where email = ?";
+		
+
+		
+		try {
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, emailAdmin);
+			ResultSet rs = st.executeQuery();
+			
+			if(rs.next()){
+				return rs.getInt("idAdmin");
+			}else{
+				return 0;
+			}
+							
+		} catch (SQLException e) {			
+			e.printStackTrace();
+			return 0;
+		}
+		
+	}
 	
 }
