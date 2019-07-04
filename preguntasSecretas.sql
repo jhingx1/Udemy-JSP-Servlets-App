@@ -28,3 +28,5 @@ select a.email,a.nombre,a.estado,p.id,p.pregunta from pregunta p
 inner join administrador a
 on a.id = p.id
 where a.id = p.id;
+
+select * from log;

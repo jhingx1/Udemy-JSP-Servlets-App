@@ -16,7 +16,7 @@
 	<c:out value="${requestScope.mensaje}"/> <br/>
 	
 	<c:forEach var="admin" items="${sessionScope.administradores}">
-		<c:out value="${admin.email}" />, ${admin.contrasena}, ${admin.nombre}, ${admin.estado},
+		<c:out value="${admin.email}" />, ${admin.contrasena}, ${admin.nombre}, ${admin.respuesta},${admin.urlImagen},
 		
 		<!-- Manejo de excepciones -->		
 		<c:catch var="ex">
