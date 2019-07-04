@@ -1,4 +1,4 @@
-package com.negocio;
+package com.negocio.controlador;
 
 import java.io.IOException;
 import java.security.NoSuchProviderException;

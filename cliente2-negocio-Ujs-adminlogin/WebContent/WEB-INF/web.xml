@@ -13,7 +13,7 @@
     <description></description>
     <display-name>Servlet</display-name>
     <servlet-name>Servlet</servlet-name>
-    <servlet-class>com.negocio.Servlet</servlet-class>
+    <servlet-class>com.negocio.controlador.Servlet</servlet-class>
     
     <!-- Uso de parametros inciales  -->
     <init-param>
