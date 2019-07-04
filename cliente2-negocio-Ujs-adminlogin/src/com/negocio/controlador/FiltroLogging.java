@@ -23,6 +23,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.negocio.model.Logging;
+import com.negocio.util.Util;
 
 /**
  * Servlet Filter implementation class FiltroLogging
@@ -74,6 +75,10 @@ public class FiltroLogging implements Filter {
 		if(accion!=null){
 			if(sesion.getAttribute("usuario")!=null){
 				
+				//Para el horas-mes-anio
+				Util util = new Util();
+				String fechaYHora = util.getAnio() + "/" + util.getMes() +"/" + util.getDia() + "/" + util.getHora();
+				
 				//El id se obtiene desde el servlet
 				int idAdmin = (int) sesion.getAttribute("id");
 				
@@ -85,12 +90,29 @@ public class FiltroLogging implements Filter {
 					
 					//obtener la conexion
 					//Logging logging = new Logging(con);
-					if(new Logging(con).registrarLog("Consulta Administradores",idAdmin)){
+					if(new Logging(con).registrarLog("Consulta Administradores : " + fechaYHora,idAdmin)){
 						log.info("Log creado correctamente");
 					}else{
 						log.error("Error al crear el log");
 					}
 					
+				}else if(accion.equals("registroPregunta")){
+					//obtener la conexion
+					//Logging logging = new Logging(con);
+					if(new Logging(con).registrarLog("Formulario para registrar pregunta " 
+							+ "secreta." + fechaYHora,idAdmin)){
+						log.info("Log creado correctamente");
+					}else{
+						log.error("Error al crear el log");
+					}
+				}else if(accion.equals("registrarPregunta")){
+					//obtener la conexion
+					//Logging logging = new Logging(con);
+					if(new Logging(con).registrarLog("Intento de registro secreta " + fechaYHora,idAdmin)){
+						log.info("Log creado correctamente");
+					}else{
+						log.error("Error al crear el log");
+					}
 				}
 				
 			}
