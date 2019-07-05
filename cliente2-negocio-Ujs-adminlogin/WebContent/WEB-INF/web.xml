@@ -38,4 +38,14 @@
     <filter-name>FiltroLogging</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ServletAjax</display-name>
+    <servlet-name>ServletAjax</servlet-name>
+    <servlet-class>com.negocio.controlador.ServletAjax</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletAjax</servlet-name>
+    <url-pattern>/ServletAjax</url-pattern>
+  </servlet-mapping>
 </web-app>
