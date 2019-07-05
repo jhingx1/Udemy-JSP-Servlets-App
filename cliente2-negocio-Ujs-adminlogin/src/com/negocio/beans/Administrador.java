@@ -34,6 +34,12 @@ public class Administrador {
 
 
 
+	public Administrador() {
+		//constructor vacio.
+	}
+
+
+
 	@Override
 	public String toString() {		
 		return super.toString();

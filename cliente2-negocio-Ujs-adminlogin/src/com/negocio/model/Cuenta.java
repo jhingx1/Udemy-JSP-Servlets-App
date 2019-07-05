@@ -150,4 +150,28 @@ public class Cuenta {
 		}		
 	}
 	
+	public boolean existeAdministrador(String email){
+		String sql = "select * from administrador where email = ?";
+		
+		try {			
+			
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, email);
+			ResultSet rs = st.executeQuery();
+			
+			if(rs.next()){	//coloca el cursor atraz del dato.			
+				return true;				
+			}else{
+				return false;
+			}
+			
+			
+		} catch (SQLException e) {
+			log.error("Al consultar existencia de administrador" + e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
 }

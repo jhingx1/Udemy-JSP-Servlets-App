@@ -133,6 +133,8 @@ public class Servlet extends HttpServlet {
 				setRespuestaControlador(accion).forward(request, response);
 			}else if(accion.equals("envioCorreo")){
 				setRespuestaControlador(accion).forward(request, response);
+			}else if(accion.equals("registroAdmin")){
+				setRespuestaControlador(accion).forward(request, response);
 			}			
 		}else{
 			//redirigiendo hacia otra pagina
@@ -244,8 +246,38 @@ public class Servlet extends HttpServlet {
 					request.setAttribute("mensaje", "Error al Enviar Correo Electronico");
 				}
 				setRespuestaControlador("postEnvioCorreo").forward(request, response);
-			}
-			
+			}else if(accion.equals("registrarAdmin")){//Para registrar un nuevo administrador
+				Administrador administrador = new Administrador();
+				administrador.setEmail(request.getParameter("email"));
+				administrador.setContrasena(request.getParameter("password"));
+				administrador.setNombre(request.getParameter("nombre"));
+				administrador.setRespuesta(request.getParameter("respuesta"));
+				administrador.setId(Integer.parseInt(request.getParameter("pregunta")));
+				
+				//para insertar un administrador
+				Cuenta cuenta = new Cuenta(con);
+				
+				if (!cuenta.existeAdministrador(request.getParameter("email"))) {//Para validar que no se cre dos email igules
+					if (cuenta.registrarAdministrador(administrador)) {
+
+						log.info("Ingresado correctamente como: ");
+
+						request.setAttribute("msg", "administrador credo correctamente");
+
+					} else {
+						log.error("El admin no fue creado");
+						//error en la amisma pagina
+						request.setAttribute("msg", "Error al crear el administrador");
+					} 
+				}else{
+					log.error("el admin ya fue creado");
+					//error en la amisma pagina
+					request.setAttribute("msg", "Admin. duplicado");
+				}
+				
+				setRespuestaControlador("registroAdmin").forward(request, response);
+				
+			}						
 		}else{
 			//redirigiendo hacia otra pagina
 			//setRespuestaControlador("index.jsp").forward(request, response);

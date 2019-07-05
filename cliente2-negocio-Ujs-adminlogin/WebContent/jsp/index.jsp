@@ -56,6 +56,7 @@
 					<h3>Ingresado como : <%=session.getAttribute("usuario") %> </h3>
 					
 					<p><a href="?accion=logout">Cerrar Sesion</a></p><!-- Se procesa en doget -->
+					<p><a href="?accion=registroAdmin">Registrar Administrador</a></p>
 					<p><a href="?accion=consultarAdministradores">Consultar Administradores</a></p>
 					<p><a href="?accion=registroPregunta">Registrar pregunta</a></p>
 					<p><a href="?accion=envioCorreo">Enviar Correo - Electronico</a></p>													

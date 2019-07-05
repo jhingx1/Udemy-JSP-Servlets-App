@@ -73,7 +73,7 @@ public class FiltroLogging implements Filter {
 		HttpSession sesion = servletRequest.getSession();
 		
 		if(accion!=null){
-			if(sesion.getAttribute("usuario")!=null){
+			if(sesion.getAttribute("usuario")!=null && sesion.getAttribute("id")!=null){
 				
 				//Para el horas-mes-anio
 				Util util = new Util();
