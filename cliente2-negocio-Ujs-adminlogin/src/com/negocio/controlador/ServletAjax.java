@@ -82,5 +82,22 @@ public class ServletAjax extends HttpServlet {
 		
 		return valorRetorno;
 	}
-
+	
+	//para validar una imagen y el tamaño
+	public boolean isImagenValida(FileItem archivo){
+		
+		String nombre = archivo.getName();
+		
+		if(nombre.isEmpty()){
+			
+			//extencion de la imagen
+			String extencion = nombre.substring(nombre.length()-3,nombre.length());
+			
+		}else{
+			return false;
+		}
+		
+		return false;
+	}
+	
 }
