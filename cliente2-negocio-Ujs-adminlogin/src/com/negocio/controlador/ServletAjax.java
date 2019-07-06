@@ -66,13 +66,23 @@ public class ServletAjax extends HttpServlet {
 				long tamanioImagen = item.getSize();
 				
 				//valir archivo de la imagen y tamaño maximo
+				if(isImagenValida(item)){
+					
+					//tamaño de la imagen
+					if(tamanioImagen > 0 && tamanioImagen < 524880){ //en bytes
+						//Para grabar la imagen
+						File archivoCargado = new File(urlDestino,nombreImagen);
+						//escribiendo el archivo
+						item.write(archivoCargado);
+						
+						valorRetorno = "Imagen Cargada Correctamente";
+					}else{
+						valorRetorno ="Tamaño maximo de la imagen es 5 MB";
+					}						
+				}else{
+					valorRetorno ="El archivo a cargar no es una imagen";
+				}
 				
-				//Para grabar la imagen
-				File archivoCargado = new File(urlDestino,nombreImagen);
-				//escribiendo el archivo
-				item.write(archivoCargado);
-				
-				valorRetorno = "Imagen Cargada Correctamente";
 			}
 		} catch (Exception e) {
 			log.error("Al cargar imagen" +e.getMessage());
@@ -88,16 +98,25 @@ public class ServletAjax extends HttpServlet {
 		
 		String nombre = archivo.getName();
 		
-		if(nombre.isEmpty()){
+		if(!(nombre.isEmpty())){
 			
 			//extencion de la imagen
-			String extencion = nombre.substring(nombre.length()-3,nombre.length());
+			String extencion3 = nombre.substring(nombre.length()-3,nombre.length());
+			String extencion4 = nombre.substring(nombre.length()-4,nombre.length());
+			
+			if(extencion3.equals("jpg") || extencion3.equals("png")){
+				return true;
+			}else if(extencion4.equals("JPEG") || extencion4.equals("TIFF")){
+				return true;
+			}else{
+				return false;
+			}
+			
 			
 		}else{
 			return false;
 		}
-		
-		return false;
+				
 	}
 	
 }

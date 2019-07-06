@@ -8,7 +8,9 @@ public class DemosComcepto {
 		//otenemos la extencion imagen
 		String parte = nombre.substring(nombre.length()-3, nombre.length());
 		System.out.println(nombre);
-		System.out.println(parte);		
+		System.out.println(parte);
+		
+		
 
 	}
 
