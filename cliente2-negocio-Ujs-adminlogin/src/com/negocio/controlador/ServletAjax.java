@@ -2,6 +2,7 @@ package com.negocio.controlador;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -43,12 +44,18 @@ public class ServletAjax extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");//idioma
+		response.setContentType("text/html; charset-UTF-8");
+		PrintWriter out = response.getWriter();//Para devolverele el texto a la funcion ajax-> responseText
+		 
 		String accion = request.getParameter("accion");
 		
 		if(accion.equals("cargarImagen")){
 			//System.out.println("Peticion Ajax recibida correctamente");
 			String s = cargarImagen(request, "D:/REPO_JSP_SERVLET/repo_data");
 			log.info(s);
+			out.println(s);
 		}
 	
 		
@@ -75,19 +82,19 @@ public class ServletAjax extends HttpServlet {
 						//escribiendo el archivo
 						item.write(archivoCargado);
 						
-						valorRetorno = "Imagen Cargada Correctamente";
+						valorRetorno = "<span style='color:green;'>Imagen Cargada Correctamente</span>";
 					}else{
-						valorRetorno ="Tamaño maximo de la imagen es 5 MB";
+						valorRetorno ="<span style='color:red;'>Tamaño maximo de la imagen es 5 MB</span>";
 					}						
 				}else{
-					valorRetorno ="El archivo a cargar no es una imagen";
+					valorRetorno ="<span style='color:red;'>El archivo a cargar no es una imagen</span>";
 				}
 				
 			}
 		} catch (Exception e) {
 			log.error("Al cargar imagen" +e.getMessage());
 			e.printStackTrace();
-			valorRetorno = "Error al cargar Imagen";
+			valorRetorno = "<span style='color:red;'>Error al cargar Imagen</span>";
 		}
 		
 		return valorRetorno;

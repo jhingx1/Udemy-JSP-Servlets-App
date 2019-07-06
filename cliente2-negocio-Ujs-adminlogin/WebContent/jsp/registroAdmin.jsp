@@ -70,7 +70,9 @@
 			</tr>
 			<tr>
 				<td>Seleccione una foto</td>
-				<td><input type="file" id="file" /><input type="button" value="cargar" onclick="cargarImagen()"/></td>
+				<td><input type="file" id="file" /><input type="button" value="cargar" onclick="cargarImagen()"/>
+					<br/><div id="respuesta" style="font-weight:bold"></div>
+				</td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Crear"/></td>

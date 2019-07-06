@@ -4,6 +4,9 @@
 
 function cargarImagen(){
 	
+	//Para mostrar el proceso de carga
+	document.getElementById("respuesta").innerHTML = "Cargando Imagen, espere...";
+	
 	var formData = new FormData(); //FormData : formulario con codigo
 	//para que el navegador abra una carpeta para seleecionar imagenes
 	formData.append("file",document.getElementById("file").files[0]);
@@ -20,9 +23,10 @@ function cargarImagen(){
 	xhr.onload = function(){
 		//status = variable que guarda el resultado de la peticion:si el server estaba ocupado o otroas
 		if(this.status==200){
-			alert("peticion exitosa");
+			//alert("peticion exitosa");
+			document.getElementById("respuesta").innerHTML = xhr.responseText;
 		}else{
-			alert("Fallo peticion")
+			//alert("Fallo peticion")
 		}
 	};
 	
