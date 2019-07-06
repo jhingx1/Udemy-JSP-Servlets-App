@@ -252,6 +252,12 @@ public class Servlet extends HttpServlet {
 				administrador.setContrasena(request.getParameter("password"));
 				administrador.setNombre(request.getParameter("nombre"));
 				administrador.setRespuesta(request.getParameter("respuesta"));
+				
+				//para cargar la imagen
+				if(!sesion.getAttribute("urlImagen").equals("")){
+					administrador.setUrlImagen((String)sesion.getAttribute("urlImagen"));
+				}
+				
 				administrador.setId(Integer.parseInt(request.getParameter("pregunta")));
 				
 				//para insertar un administrador

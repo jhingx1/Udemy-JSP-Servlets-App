@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -23,6 +24,9 @@ public class ServletAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//implenmentacion del log4j
     private static final Logger log = LogManager.getLogger("ServletAjax : ");
+    
+    //obteniendo el nombre de la imagen
+    private String nombreImagen = "";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -48,12 +52,20 @@ public class ServletAjax extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");//idioma
 		response.setContentType("text/html; charset-UTF-8");
 		PrintWriter out = response.getWriter();//Para devolverele el texto a la funcion ajax-> responseText
-		 
+		
 		String accion = request.getParameter("accion");
+		
+		//instacia de la sesscion
+		HttpSession sesion = request.getSession();
 		
 		if(accion.equals("cargarImagen")){
 			//System.out.println("Peticion Ajax recibida correctamente");
-			String s = cargarImagen(request, "D:/REPO_JSP_SERVLET/repo_data");
+			String s = cargarImagen(request, "C:/Users/Mark1/Documents/GitHub/cliente2-negocio-Ujs-adminlogin/cliente2-negocio-Ujs-adminlogin/WebContent/imagenes");
+			
+			//sesion atibuto,
+			//para guardar en la base de datos, la ruta de la imagen.
+			sesion.setAttribute("urlImagen", "/imagenes/"+nombreImagen);
+			
 			log.info(s);
 			out.println(s);
 		}
@@ -69,6 +81,7 @@ public class ServletAjax extends HttpServlet {
 		try {
 			List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 			for(FileItem item : items){
+				
 				String nombreImagen = item.getName();
 				long tamanioImagen = item.getSize();
 				
@@ -81,6 +94,9 @@ public class ServletAjax extends HttpServlet {
 						File archivoCargado = new File(urlDestino,nombreImagen);
 						//escribiendo el archivo
 						item.write(archivoCargado);
+						
+						//para que sea igual a la variable imagen, con esto obtenemos el nombre de la imagen
+						this.nombreImagen = nombreImagen;
 						
 						valorRetorno = "<span style='color:green;'>Imagen Cargada Correctamente</span>";
 					}else{
