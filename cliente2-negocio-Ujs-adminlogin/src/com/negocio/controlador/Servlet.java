@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 
 import com.negocio.model.Cuenta;
 import com.negocio.util.ManejadorCorreos;
+import com.negocio.util.VerificarRecaptcha;
 import com.negocio.beans.Administrador;
 
 /**
@@ -129,8 +130,6 @@ public class Servlet extends HttpServlet {
 				
 			}else if(accion.equals("registroPregunta")){//para registrar una pregunta (forma transaccional)
 				setRespuestaControlador(accion).forward(request, response);				
-			}else if(accion.equals("registrarPregunta")){
-				setRespuestaControlador(accion).forward(request, response);
 			}else if(accion.equals("envioCorreo")){
 				setRespuestaControlador(accion).forward(request, response);
 			}else if(accion.equals("registroAdmin")){
@@ -140,6 +139,12 @@ public class Servlet extends HttpServlet {
 			//redirigiendo hacia otra pagina
 			getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
 		}
+		
+		/*
+			else if(accion.equals("registrarPregunta")){
+				setRespuestaControlador(accion).forward(request, response);
+			}
+		*/
 		
 	}
 
@@ -288,6 +293,22 @@ public class Servlet extends HttpServlet {
 				
 				setRespuestaControlador("registroAdmin").forward(request, response);
 				
+			}else if(accion.equals("registrarPregunta")){
+				
+				String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+		        System.out.println(gRecaptchaResponse);
+		        
+		        boolean verificado = VerificarRecaptcha.verificar(gRecaptchaResponse);
+		        System.out.println("captcha: " + verificado);
+				
+		        if(verificado){
+		        	setRespuestaControlador(accion).forward(request, response);
+		        }else{
+		        	
+		        	request.setAttribute("error", "*ReCapcha invalido Intentar Nuevamente");
+		        	setRespuestaControlador("registroPregunta").forward(request, response);
+		        }
+		        
 			}						
 		}else{
 			//redirigiendo hacia otra pagina
