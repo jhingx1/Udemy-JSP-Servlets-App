@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-﻿notas: Curso Servlet y JSP
+﻿Curso Servlet y JSP
 
 Scriptlets : Es el codigo java incrutado en una pagina JSP.
 
@@ -123,19 +122,3 @@ El segundo es para ya no escribir: out.println()....
 				ServletContext contexto = getServletContext();
 				contexto.setAttribute("usuario", usuario);
 				contexto.setAttribute("contrasena", contrasena);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> branch 'master' of https://github.com/jhingx1/cliente2-negocio-Ujs-adminlogin.git

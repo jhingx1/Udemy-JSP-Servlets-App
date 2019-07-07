@@ -1,0 +1,9 @@
+Recapcha
+
+Llave publica y privada
+https://www.google.com/recaptcha/admin/site/346843924
+
+Implemetancion
+
+http://www.decodigo.com/java-recaptcha-v2
+
