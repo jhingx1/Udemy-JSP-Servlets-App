@@ -1,0 +1,8 @@
+Uso del driver en mysql en elcipse
+
+Pegamos en la carperta lib(que se en este caso ya esta creada.)
+
+Luego de pegarla le damos clic derecho	-> build -> add Build Path.
+
+Para verificar que se agrego hay que ir : clic derecho sobre el proyecto y vamos a
+propiedades y vamos a java build path para ver si se ha agregado el driver al proyecto
