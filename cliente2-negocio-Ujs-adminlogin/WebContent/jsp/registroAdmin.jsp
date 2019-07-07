@@ -10,6 +10,20 @@
 <!-- url:/cliente2-negocio-Ujs-adminlogin/js/ajax.js -->
 <script type="text/javascript" src='<c:url value="/js/ajax.js" />'></script>
 
+<script type="text/javascript" src='<c:url value="/js/jquery-1.8.2.min.js" />'></script>
+<script type="text/javascript" src='<c:url value="/js/jquery.validationEngine-es.js" />'></script>
+<script type="text/javascript" src='<c:url value="/js/jquery.validationEngine.js" />'></script>
+
+<link rel="stylesheet" href="<c:url value='/css/validationEngine.jquery.css'/>" type="text/css"/>
+
+<script type="text/javascript">
+
+	jQuery(document).ready(function(){		
+		jQuery("#formValidado").validationEngine();
+	});
+
+</script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registro Admininistrador</title>
 
@@ -21,23 +35,23 @@
 	
 	<c:out value="${requestScope.msg}"/> <br/>
 	
-	<form action="?accion=registrarAdmin" method="post">
+	<form action="?accion=registrarAdmin" method="post" id="formValidado">
 		<table>
 			<tr>
 				<td>Correo Electronico</td>
-				<td><input type="text" name="email" size="40" /></td>
+				<td><input type="text" class="validate[required,custom[email]]" name="email" size="40" /></td>
 			</tr>
 			<tr>
 				<td>Contraeña</td>
-				<td><input type="password" name="contrasena" size="40" /></td>
+				<td><input type="password" class="validate[required,minSize[3]]" id="contrasena" name="contrasena" size="40" /></td>
 			</tr>
 			<tr>
 				<td>Repite Contraseña</td>
-				<td><input type="password" size="40" /></td>
+				<td><input type="password" class="validate[required,equals[contrasena]]" size="40" /></td>
 			</tr>
 			<tr>
-				<td>Nombre completo</td>
-				<td><input type="text" name="nombre" size="40" /></td>
+				<td>Nombre completo</td> 
+				<td><input type="text" class="validate[required,custom[onlyLetterNumber]]" name="nombre" size="40" /></td>
 			</tr>
 			<tr>
 				<td>Elige una pregunta secreta</td>
@@ -66,7 +80,7 @@
 			</tr>
 			<tr>
 				<td>Captura tu respuesta secreta</td>
-				<td><input type="text" name="respuesta" size="40" /></td>
+				<td><input type="text" class="validate[required]"  name="respuesta" size="40" /></td>
 			</tr>
 			<tr>
 				<td>Seleccione una foto</td>
