@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿notas: Curso Servlet y JSP
 
 Scriptlets : Es el codigo java incrutado en una pagina JSP.
@@ -67,3 +68,74 @@ El segundo es para ya no escribir: out.println()....
 
 
 
+=======
+﻿notas: Curso Servlet y JSP
+
+Scriptlets : Es el codigo java incrutado en una pagina JSP.
+
+El servlet : actua como controlador.
+
+Request : Peticion
+Response : Respuesta
+
+Raiz de contexto : 
+Ejm:
+
+1-JSPServlets/  ---es nuestra raiz de contexto
+
+Identifica alguna seccion de nuestra aplicacion. El servlet puede encarar esta ruta.
+
+JNDI: para acceder a una base de datos de manera facil.
+
+<!-- href:estasmos diciendo que la variable accion va ha terner el valor de loin 
+		con esto se va a pasar un parametro por doget(del servlet) al servlet y me a redirigir a
+		la vista login-->
+		<a href="?accion=login">Iniciar Sesion</a> 
+
+getParameter : para leer paramtros get o post.
+
+<%
+		out.println("Tu usuario es: " + request.getParameter("usuario"));
+	%>
+	<%= "Tu contraseña es:" +request.getParameter("contrasena")
+	%>
+	
+El segundo es para ya no escribir: out.println()....
+
+
+//ambitos 
+
+//ambito request, para solo una peticion
+				request.setAttribute("usuario", usuario);
+				request.setAttribute("contrasena", contrasena);
+				
+				//ambito sesion
+				//la sesion es creada por el servlet.Y se destruyen los objeto que
+				//tenga dentro la sesion.Cuando el navegador se cierre o se destruya con una linea
+				//de codigo.
+				HttpSession sesion = request.getSession();
+				sesion.setAttribute("usuario", usuario);
+				sesion.setAttribute("contrasena", contrasena);
+			
+//ambito contexto, es el contexto del servlet, permanece hasta que el servlet 
+				//ejecute un metodo llamado distroid
+				
+				ServletContext contexto = getServletContext();
+				contexto.setAttribute("usuario", usuario);
+				contexto.setAttribute("contrasena", contrasena);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> branch 'master' of https://github.com/jhingx1/cliente2-negocio-Ujs-adminlogin.git

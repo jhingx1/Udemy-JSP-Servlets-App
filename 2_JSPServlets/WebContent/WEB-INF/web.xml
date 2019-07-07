@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>2_JSPServlets</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>Servlet</display-name>
+    <servlet-name>Servlet</servlet-name>
+    <servlet-class>com.novellius.Servlet</servlet-class>
+    
+    <!-- Uso de parametros inciales  -->
+    <init-param>
+    	<param-name>rutaJsp</param-name>
+    	<param-value>/jsp/</param-value><!-- Ruta de la carpeta de los jsp -->
+    </init-param>
+    
+  </servlet>
+  <!-- Mapear la ruta -->
+  <servlet-mapping>
+    <servlet-name>Servlet</servlet-name>
+    <url-pattern>//*</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
