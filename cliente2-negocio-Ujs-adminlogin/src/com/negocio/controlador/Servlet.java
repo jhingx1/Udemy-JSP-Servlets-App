@@ -249,36 +249,41 @@ public class Servlet extends HttpServlet {
 			}else if(accion.equals("registrarAdmin")){//Para registrar un nuevo administrador
 				Administrador administrador = new Administrador();
 				administrador.setEmail(request.getParameter("email"));
-				administrador.setContrasena(request.getParameter("password"));
+				administrador.setContrasena(request.getParameter("contrasena"));
 				administrador.setNombre(request.getParameter("nombre"));
 				administrador.setRespuesta(request.getParameter("respuesta"));
 				
-				//para cargar la imagen
-				if(!sesion.getAttribute("urlImagen").equals("")){
-					administrador.setUrlImagen((String)sesion.getAttribute("urlImagen"));
+				if (sesion.getAttribute("urlImagen") != null) {
+					//para cargar la imagen
+					if (!sesion.getAttribute("urlImagen").equals("")) {
+						administrador.setUrlImagen((String) sesion.getAttribute("urlImagen"));
+					} 
 				}
-				
 				administrador.setId(Integer.parseInt(request.getParameter("pregunta")));
 				
 				//para insertar un administrador
 				Cuenta cuenta = new Cuenta(con);
 				
-				if (!cuenta.existeAdministrador(request.getParameter("email"))) {//Para validar que no se cre dos email igules
-					if (cuenta.registrarAdministrador(administrador)) {
+				if (administrador.isValidAdministrador()) { //validando datos
+					if (!cuenta.existeAdministrador(request.getParameter("email"))) {//Para validar que no se cre dos email igules
+						if (cuenta.registrarAdministrador(administrador)) {
 
-						log.info("Ingresado correctamente como: ");
+							log.info("Ingresado correctamente como: ");
 
-						request.setAttribute("msg", "administrador credo correctamente");
+							request.setAttribute("msg", "administrador credo correctamente");
 
+						} else {
+							log.error("El admin no fue creado");
+							//error en la amisma pagina
+							request.setAttribute("msg", "Error al crear el administrador");
+						}
 					} else {
-						log.error("El admin no fue creado");
+						log.error("el admin ya fue creado");
 						//error en la amisma pagina
-						request.setAttribute("msg", "Error al crear el administrador");
+						request.setAttribute("msg", "Admin. duplicado");
 					} 
 				}else{
-					log.error("el admin ya fue creado");
-					//error en la amisma pagina
-					request.setAttribute("msg", "Admin. duplicado");
+					request.setAttribute("msg", administrador.getErroresForm());
 				}
 				
 				setRespuestaControlador("registroAdmin").forward(request, response);

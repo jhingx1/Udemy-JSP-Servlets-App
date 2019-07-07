@@ -1,14 +1,23 @@
 package com.negocio.beans;
 
+import org.apache.commons.validator.EmailValidator;
+
 public class Administrador {
 	
 	private int idAdmin;
-	private String email;
+	private String email;//lo validaremos con commoms-validator-pueva validar varias condiciones
 	private String contrasena;
 	private String nombre;
 	private String respuesta;
 	private String urlImagen;
-	private int id;		
+	private int id;	
+	
+	//Para informar al usuario los errores de la clase
+	private StringBuilder sb;
+	
+	public String getErroresForm(){
+		return (sb != null) ? sb.toString():new StringBuilder().toString();
+	}
 	
 	public Administrador(int idAdmin, String email, String contrasena, String nombre, String respuesta,
 			String urlImagen, int id) {		
@@ -37,8 +46,41 @@ public class Administrador {
 	public Administrador() {
 		//constructor vacio.
 	}
-
-
+	
+	//validaciones
+	public boolean isValidAdministrador(){
+		
+		sb = new StringBuilder();//msg de error
+		
+		boolean valorRetorno = false;
+		
+		EmailValidator emailValidator = EmailValidator.getInstance();
+		//si la condicion no se cumple
+		if(!emailValidator.isValid(email)){
+			sb.append("Email invalido");
+			valorRetorno = false;
+		}
+		
+		if(contrasena.equals("")){
+			sb.append("Contraseña no puede esta vacia");
+			valorRetorno = false;
+		}else if(contrasena.length() < 3){
+			sb.append("Constraseña debe tener minimo 4 caracteres");
+			valorRetorno = false;
+		}
+		
+		if(nombre.equals("")){
+			sb.append("Nombre no puede esta vacia");
+			valorRetorno = false;
+		}
+		
+		if(sb.length() == 0){
+			valorRetorno = true;
+		}
+		
+		return valorRetorno;
+	}
+	
 
 	@Override
 	public String toString() {		
