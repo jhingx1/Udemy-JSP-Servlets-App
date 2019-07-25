@@ -207,10 +207,12 @@ public class Servlet extends HttpServlet {
 						cookie.setMaxAge(60*60*24); //timepo de vida
 						response.addCookie(cookie);
 						log.info("Cookie creada");
+						log.debug("Cookie creada");
 					}
 				} catch (NullPointerException e) {
 					log.info("No marco el check");
 					//mejorar el codigo para el cookie
+					log.debug("No marco el check");
 				}
 				
 				
@@ -218,6 +220,7 @@ public class Servlet extends HttpServlet {
 				Cuenta cuenta = new Cuenta(con);
 				if(cuenta.login(usuario, contrasena)){					
 					log.info("Ingresado correctamente como: " +  usuario);
+					log.debug("Ingresado correctamente como: " +  usuario);
 					
 					sesion.setAttribute("usuario", usuario);
 					sesion.setAttribute("contrasena", contrasena);
@@ -232,6 +235,7 @@ public class Servlet extends HttpServlet {
 					
 				}else{					
 					log.error("error login");
+					log.debug("error login");
 					//error en la amisma pagina
 					request.setAttribute("error", "Nombre de usuario o Contraseña incorrectos");
 					setRespuestaControlador("login").forward(request, response);
