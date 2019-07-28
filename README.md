@@ -4,7 +4,7 @@ AppWeb para administracion de usuario y administradores.
 
 Realizar Cambios
 ================
-En una nueva rama.
+En una nueva rama. En esta rama el proyecto se va a reconstruir mavenizado y se va a incluir la documentacion que se colocara directamente en el MASTER.
 
 BackEnd
 
